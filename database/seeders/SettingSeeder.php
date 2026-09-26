@@ -13,6 +13,8 @@ class SettingSeeder extends Seeder
             // General
             ['key' => 'site_name', 'value' => 'PacarVirtual', 'group' => 'general', 'type' => 'text', 'label' => 'Nama Situs'],
             ['key' => 'tagline', 'value' => 'Sewa Pacar', 'group' => 'general', 'type' => 'text', 'label' => 'Tagline / Judul Header'],
+            ['key' => 'meta_title', 'value' => 'PacarVirtual', 'group' => 'general', 'type' => 'text', 'label' => 'Meta Title Utama (judul preview WA/link)'],
+            ['key' => 'meta_description', 'value' => 'Specialis Rental Pacar menyediakan pengalaman berkencan untuk klien dengan pilihan secara Online & Offline', 'group' => 'general', 'type' => 'textarea', 'label' => 'Meta Description Utama (deskripsi preview WA/link)'],
             ['key' => 'footer_text', 'value' => 'Pacarvirtual.co_', 'group' => 'general', 'type' => 'text', 'label' => 'Teks Footer'],
             // Appearance (semua dynamic)
             ['key' => 'logo', 'value' => 'assets-legacy/logo.png', 'group' => 'appearance', 'type' => 'image', 'label' => 'Logo Utama'],

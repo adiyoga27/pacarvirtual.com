@@ -47,6 +47,9 @@
 
         <div class="bg-white rounded-3xl border p-6">
             <h3 class="font-bold mb-4">SEO Halaman Ini (dynamic)</h3>
+            @if(($page->slug ?? '') === 'home')
+            <div class="mb-4 p-3 rounded-2xl bg-sky-50 border border-sky-200 text-xs text-sky-800">Ini <b>Homepage</b> — judul & deskripsi preview WA/link diambil dari <a href="{{ route('admin.settings.index', 'general') }}" class="font-bold underline">Pengaturan → General (Meta Title/Description Utama)</a>, bukan dari form ini.</div>
+            @endif
             <div class="grid gap-4">
                 <div><label class="text-xs font-bold text-slate-500">META TITLE</label><input name="meta_title" value="{{ old('meta_title', $page->meta_title) }}" class="mt-1 w-full px-4 py-2.5 rounded-2xl border"></div>
                 <div><label class="text-xs font-bold text-slate-500">META DESCRIPTION</label><textarea name="meta_description" rows="2" class="mt-1 w-full px-4 py-2.5 rounded-2xl border">{{ old('meta_description', $page->meta_description) }}</textarea></div>

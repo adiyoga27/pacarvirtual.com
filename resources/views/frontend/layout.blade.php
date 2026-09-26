@@ -5,13 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @php
         $gs = $gsettings ?? [];
-        $pageMetaTitle = $page->meta_title ?? null;
         $siteName = $gs['site_name'] ?? 'PacarVirtual';
-        $title = $pageMetaTitle ?: ($siteName . ' - ' . ($page->header_title ?? ''));
-        $desc = $page->meta_description ?? ($gs['meta_description'] ?? 'Specialis Rental Pacar Online & Offline');
+        // Judul & deskripsi UTAMA dari General — homepage selalu ikut sini (ini yang tampil di preview WA)
+        $globalTitle = $gs['meta_title'] ?? $siteName;
+        $globalDesc = $gs['meta_description'] ?? 'Specialis Rental Pacar Online & Offline';
+        $isHome = ($page->slug ?? '') === 'home';
+        if ($isHome) {
+            $title = $globalTitle;
+            $desc = $globalDesc;
+        } else {
+            $title = ($page->meta_title ?? null) ?: $globalTitle;
+            $desc = ($page->meta_description ?? null) ?: $globalDesc;
+        }
         $keywords = $page->meta_keywords ?? ($gs['meta_keywords_default'] ?? 'sewa pacar, rental pacar');
         $author = $page->meta_author ?? ($gs['meta_author'] ?? 'https://pacarvirtual.com/');
         $ogImage = !empty($page->og_image) ? pv_asset($page->og_image) : pv_asset($gs['og_image_default'] ?? 'assets-legacy/logo.png');
+        $canonical = url()->current();
         $favicon = pv_asset($gs['favicon'] ?? 'assets-legacy/images/icon.png');
         $gtmId = $gs['gtm_id'] ?? '';
         $gtagId = $gs['gtag_id'] ?? '';
@@ -38,9 +47,17 @@
     <meta name="description" content="{{ $desc }}">
     <meta name="keywords" content="{{ $keywords }}">
     <meta name="author" content="{{ $author }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ $siteName }}">
+    <meta property="og:url" content="{{ $canonical }}">
     <meta property="og:title" content="{{ $title }}">
     <meta property="og:description" content="{{ $desc }}">
     <meta property="og:image" content="{{ $ogImage }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $title }}">
+    <meta name="twitter:description" content="{{ $desc }}">
+    <meta name="twitter:image" content="{{ $ogImage }}">
+    <link rel="canonical" href="{{ $canonical }}">
     <link rel="shortcut icon" href="{{ $favicon }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
