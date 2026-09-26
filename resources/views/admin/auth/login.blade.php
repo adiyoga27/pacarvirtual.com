@@ -18,8 +18,8 @@
             <form method="POST" action="{{ route('admin.login.post') }}" class="space-y-4">
                 @csrf
                 <div>
-                    <label class="text-xs font-semibold text-slate-600">EMAIL</label>
-                    <input type="email" name="email" value="{{ old('email', 'admin@pacarvirtual.com') }}" required class="mt-1 w-full px-4 py-3 rounded-2xl border focus:ring-2 focus:ring-rose-400 outline-none" placeholder="admin@pacarvirtual.com">
+                    <label class="text-xs font-semibold text-slate-600">USERNAME / EMAIL</label>
+                    <input name="login" value="{{ old('login', 'admin') }}" required class="mt-1 w-full px-4 py-3 rounded-2xl border focus:ring-2 focus:ring-rose-400 outline-none" placeholder="username atau email">
                 </div>
                 <div>
                     <label class="text-xs font-semibold text-slate-600">PASSWORD</label>
@@ -28,7 +28,7 @@
                 <label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" name="remember" class="rounded"> Ingat saya</label>
                 <button class="w-full py-3 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold hover:opacity-90">Masuk Dashboard <i class="bi bi-arrow-right"></i></button>
             </form>
-            <p class="text-xs text-slate-400 mt-6 text-center">Default: admin@pacarvirtual.com / password</p>
+            <p class="text-xs text-slate-400 mt-6 text-center">Bisa pakai username atau email</p>
         </div>
     </div>
 </body>

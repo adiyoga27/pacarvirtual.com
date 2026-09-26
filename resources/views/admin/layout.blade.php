@@ -53,9 +53,18 @@
             <a href="{{ route('admin.services.index') }}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
                 <i class="bi bi-tags-fill"></i> Layanan
             </a>
+            <a href="{{ route('admin.payment-methods.index') }}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 {{ request()->routeIs('admin.payment-methods.*') ? 'active' : '' }}">
+                <i class="bi bi-credit-card-2-front"></i> Metode Pembayaran
+            </a>
+            <a href="{{ route('admin.talents.index') }}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 {{ request()->routeIs('admin.talents.*') ? 'active' : '' }}">
+                <i class="bi bi-person-badge"></i> Talent
+            </a>
             <div class="pt-3 pb-1 px-3 text-[11px] uppercase tracking-wider text-slate-500">Sistem</div>
             <a href="{{ route('admin.users.index') }}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                 <i class="bi bi-people-fill"></i> Admin
+            </a>
+            <a href="{{ route('admin.activity.index') }}" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10 {{ request()->routeIs('admin.activity.*') ? 'active' : '' }}">
+                <i class="bi bi-clock-history"></i> Log Sistem
             </a>
             <a href="{{ route('home') }}" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/10">
                 <i class="bi bi-globe"></i> Lihat Website

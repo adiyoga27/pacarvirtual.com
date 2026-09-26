@@ -18,7 +18,8 @@ class LinkButtonController extends Controller
 
     public function create(Page $page)
     {
-        return view('admin.buttons.form', ['page' => $page, 'button' => new LinkButton(['page_id' => $page->id, 'icon_width' => 40, 'is_active' => true, 'open_new_tab' => true])]);
+        $pages = Page::orderBy('sort_order')->get();
+        return view('admin.buttons.form', ['page' => $page, 'pages' => $pages, 'button' => new LinkButton(['page_id' => $page->id, 'icon_width' => 40, 'is_active' => true, 'open_new_tab' => true])]);
     }
 
     public function store(Request $request, Page $page)
@@ -29,12 +30,13 @@ class LinkButtonController extends Controller
             $data['icon_path'] = $request->file('icon_upload')->store('icons', 'public');
         }
         LinkButton::create($data);
-        return redirect()->route('admin.pages.buttons.index', $page)->with('success', 'Tombol berhasil ditambah.');
+        return redirect()->route('admin.pages.index', ['focus' => $page->id])->with('success', 'Tombol berhasil ditambah.');
     }
 
     public function edit(Page $page, LinkButton $button)
     {
-        return view('admin.buttons.form', compact('page', 'button'));
+        $pages = Page::orderBy('sort_order')->get();
+        return view('admin.buttons.form', compact('page', 'button', 'pages'));
     }
 
     public function update(Request $request, Page $page, LinkButton $button)
@@ -47,7 +49,7 @@ class LinkButtonController extends Controller
             $data['icon_path'] = $request->file('icon_upload')->store('icons', 'public');
         }
         $button->update($data);
-        return redirect()->route('admin.pages.buttons.index', $page)->with('success', 'Tombol berhasil disimpan.');
+        return redirect()->route('admin.pages.index', ['focus' => $page->id])->with('success', 'Tombol berhasil disimpan.');
     }
 
     public function destroy(Page $page, LinkButton $button)

@@ -8,7 +8,7 @@
     <div><label class="text-[11px] font-bold text-slate-400">DARI</label><input type="date" name="from" value="{{ $from }}" class="w-full px-4 py-2.5 rounded-2xl border"></div>
     <div><label class="text-[11px] font-bold text-slate-400">SAMPAI</label><input type="date" name="to" value="{{ $to }}" class="w-full px-4 py-2.5 rounded-2xl border"></div>
     <div><label class="text-[11px] font-bold text-slate-400">LAYANAN</label><select name="service" class="w-full px-4 py-2.5 rounded-2xl border"><option value="">Semua</option>@foreach($services as $s)<option value="{{ $s->name }}" {{ $service === $s->name ? 'selected' : '' }}>{{ $s->name }}</option>@endforeach</select></div>
-    <div><label class="text-[11px] font-bold text-slate-400">PEMBAYARAN</label><select name="payment" class="w-full px-4 py-2.5 rounded-2xl border"><option value="">Semua</option>@foreach(['QRIS','Transfer Bank','E-Wallet','Cash','Lainnya'] as $pm)<option {{ $payment === $pm ? 'selected' : '' }}>{{ $pm }}</option>@endforeach</select></div>
+    <div><label class="text-[11px] font-bold text-slate-400">PEMBAYARAN</label><select name="payment" class="w-full px-4 py-2.5 rounded-2xl border"><option value="">Semua</option>@foreach($paymentMethods ?? ['QRIS','Transfer Bank','E-Wallet','Cash','Lainnya'] as $pm)<option {{ $payment === $pm ? 'selected' : '' }}>{{ $pm }}</option>@endforeach</select></div>
     <div><label class="text-[11px] font-bold text-slate-400">STATUS</label><select name="status" class="w-full px-4 py-2.5 rounded-2xl border"><option value="">Semua</option>@foreach(['paid','pending','cancelled','refunded'] as $st)<option value="{{ $st }}" {{ $status === $st ? 'selected' : '' }}>{{ strtoupper($st) }}</option>@endforeach</select></div>
     <div class="flex items-end gap-2"><button class="flex-1 py-2.5 rounded-2xl bg-slate-900 text-white font-bold">Tampilkan</button><button name="export" value="csv" class="py-2.5 px-4 rounded-2xl bg-emerald-500 text-white font-bold" title="Export CSV"><i class="bi bi-download"></i></button></div>
 </form>
@@ -23,9 +23,10 @@
 <div class="grid xl:grid-cols-3 gap-4">
     <div class="xl:col-span-2 bg-white rounded-3xl border p-6"><h3 class="font-bold mb-3">Omzet Harian</h3><div class="h-64"><canvas id="dailyChart"></canvas></div></div>
     <div class="bg-white rounded-3xl border p-6">
-        <h3 class="font-bold mb-3">Per Layanan</h3>
+        <h3 class="font-bold mb-3">Per Layanan <span class="text-xs font-normal text-slate-400">+ est. komisi</span></h3>
         <div class="space-y-2 text-sm max-h-64 overflow-auto">
-            @forelse($perService as $s)<div class="flex justify-between border-b py-1.5"><span>{{ $s->service_name }} <span class="text-xs text-slate-400">({{ $s->trx }}x)</span></span><b>{{ rupiah($s->omzet) }}</b></div>@empty<p class="text-slate-400 text-sm">Tidak ada data.</p>@endforelse
+            @forelse($perService as $s)<div class="border-b py-1.5"><div class="flex justify-between"><span>{{ $s->service_name }} <span class="text-xs text-slate-400">({{ $s->trx }}x)</span></span><b>{{ rupiah($s->omzet) }}</b></div><div class="text-[11px] text-slate-400 mt-0.5">Est. komisi talent: <b class="text-indigo-600">{{ rupiah($s->est_komisi ?? 0) }}</b></div></div>@empty<p class="text-slate-400 text-sm">Tidak ada data.</p>@endforelse
+            @if(!empty($estKomisiTotal))<div class="flex justify-between pt-2 text-sm"><span class="font-bold">Total est. komisi</span><b class="text-indigo-600">{{ rupiah($estKomisiTotal) }}</b></div>@endif
         </div>
         <h3 class="font-bold mt-5 mb-3">Per Pembayaran</h3>
         <div class="space-y-2 text-sm">

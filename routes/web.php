@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LinkButtonController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PaymentMethodController;
+use App\Http\Controllers\Admin\TalentController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SettingController;
@@ -22,7 +25,7 @@ Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login
 Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
 // ===== Admin Panel (modern, Tailwind, custom) =====
-Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['admin', 'log.activity'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Halaman & tombol link
@@ -48,9 +51,23 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
     Route::put('services/{service}', [ServiceController::class, 'update'])->name('services.update');
     Route::delete('services/{service}', [ServiceController::class, 'destroy'])->name('services.destroy');
 
+    Route::get('payment-methods', [PaymentMethodController::class, 'index'])->name('payment-methods.index');
+    Route::post('payment-methods', [PaymentMethodController::class, 'store'])->name('payment-methods.store');
+    Route::put('payment-methods/{paymentMethod}', [PaymentMethodController::class, 'update'])->name('payment-methods.update');
+    Route::delete('payment-methods/{paymentMethod}', [PaymentMethodController::class, 'destroy'])->name('payment-methods.destroy');
+
+    Route::get('talents', [TalentController::class, 'index'])->name('talents.index');
+    Route::post('talents', [TalentController::class, 'store'])->name('talents.store');
+    Route::put('talents/{talent}', [TalentController::class, 'update'])->name('talents.update');
+    Route::delete('talents/{talent}', [TalentController::class, 'destroy'])->name('talents.destroy');
+
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::post('users', [UserController::class, 'store'])->name('users.store');
+    Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activity.index');
+    Route::delete('activity-logs', [ActivityLogController::class, 'destroy'])->name('activity.destroy');
 });
 
 // ===== Halaman dinamis per slug (paling bawah agar tidak menabrak /admin) =====

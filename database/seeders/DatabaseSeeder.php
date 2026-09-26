@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SettingSeeder::class,
             ServiceSeeder::class,
+            PaymentMethodSeeder::class,
             PageSeeder::class,
             OrderSeeder::class,
         ]);

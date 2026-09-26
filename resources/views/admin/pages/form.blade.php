@@ -4,8 +4,17 @@
 @section('subheader', 'Konten, background, icon & SEO semuanya dinamis dari database')
 
 @section('content')
+@if(!$page->exists && !empty($parent))
+<div class="mb-4 p-4 rounded-2xl bg-indigo-50 border border-indigo-200 text-sm text-indigo-900">
+    <b><i class="bi bi-folder-plus"></i> Membuat sub-halaman di dalam “{{ $parent->name }}”.</b>
+    Setelah disimpan, tombol <b>/{{ old('slug', $page->slug) ?: 'slug-baru' }}</b> otomatis muncul di “{{ $parent->name }}”. Selanjutnya klik <b>Masuk →</b> dari struktur untuk mengisi link di dalamnya.
+    @if(request('from_button_id'))<br>Setelah jadi, tombol yang tadi juga otomatis ditautkan ke halaman ini. ✓@endif
+</div>
+@endif
 <form method="POST" action="{{ $page->exists ? route('admin.pages.update', $page) : route('admin.pages.store') }}" enctype="multipart/form-data" class="grid xl:grid-cols-3 gap-4">
     @csrf @if($page->exists) @method('PUT') @endif
+    @if(!$page->exists && !empty($parent))<input type="hidden" name="parent_id" value="{{ $parent->id }}">@endif
+    @if(!$page->exists && request('from_button_id'))<input type="hidden" name="from_button_id" value="{{ request('from_button_id') }}">@endif
     <div class="xl:col-span-2 space-y-4">
         <div class="bg-white rounded-3xl border p-6">
             <h3 class="font-bold mb-4">Konten Halaman</h3>
@@ -53,9 +62,9 @@
         <div class="bg-slate-900 text-white rounded-3xl p-6">
             <h3 class="font-bold">Publikasi</h3>
             <p class="text-xs text-slate-400 mb-4">Perubahan langsung tampil di website.</p>
-            <button class="w-full py-3 rounded-2xl bg-rose-500 font-bold hover:bg-rose-600">Simpan Halaman</button>
+            <button class="w-full py-3 rounded-2xl bg-rose-500 font-bold hover:bg-rose-600">Simpan & Isi Tombol →</button>
             @if($page->exists)<a href="{{ route('page.show', $page->slug) }}" target="_blank" class="block text-center mt-2 py-3 rounded-2xl bg-white/10 font-bold hover:bg-white/20">Lihat Halaman</a>@endif
-            <a href="{{ route('admin.pages.index') }}" class="block text-center mt-2 text-xs text-slate-400 hover:text-white">← Kembali</a>
+            <a href="{{ route('admin.pages.index', $page->exists ? ['focus' => $page->id] : []) }}" class="block text-center mt-2 text-xs text-slate-400 hover:text-white">← Kembali ke struktur</a>
         </div>
         @if($page->exists)
         <div class="bg-white rounded-3xl border p-6">

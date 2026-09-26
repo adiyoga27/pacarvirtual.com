@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="flex justify-between items-center mb-4">
-    <a href="{{ route('admin.pages.index') }}" class="text-sm text-slate-500 hover:text-slate-800">← Semua halaman</a>
+    <a href="{{ route('admin.pages.index', ['focus' => $page->id]) }}" class="text-sm text-slate-500 hover:text-slate-800">← Kembali ke struktur ({{ $page->name }})</a>
     <a href="{{ route('admin.pages.buttons.create', $page) }}" class="px-4 py-2.5 rounded-2xl bg-rose-500 text-white text-sm font-bold"><i class="bi bi-plus-lg"></i> Tambah Tombol</a>
 </div>
 <div class="bg-white rounded-3xl border shadow-sm overflow-hidden">
